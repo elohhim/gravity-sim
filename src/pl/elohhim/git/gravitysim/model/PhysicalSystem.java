@@ -6,6 +6,8 @@ package pl.elohhim.git.gravitysim.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
+
 /**
  * @author admin
  *

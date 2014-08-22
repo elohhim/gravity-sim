@@ -1,11 +1,13 @@
-package pl.elohhim.git.gravitysim.model;
+package pl.elohhim.git.gravitysim.model.primitives;
+
 
 
 /**
+ * material point in 3D Cartesian CS
  * @author elohhim
  *
  */
-public class MaterialPoint extends GeometricPoint {
+public class MaterialPoint extends Geometric3DPoint {
 
 	private double mass;
 	
@@ -13,7 +15,7 @@ public class MaterialPoint extends GeometricPoint {
 	 * default constructor
 	 */
 	public MaterialPoint() {
-		super();
+		super( 0, 0, 0);
 		mass = 1.0;
 	}
 	
