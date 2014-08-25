@@ -32,7 +32,7 @@ public class MaterialPoint extends Geometric3DPoint {
 	public MaterialPoint( double aCoord1, double aCoord2, double aCoord3, double aMass ) {
 		super( aCoord1, aCoord2, aCoord3);
 		mass = aMass;
-		setSpeed(new Vector3D());
+		setSpeed(new Vector3D( 0, 0, 0));
 	}
 	
 	/**
