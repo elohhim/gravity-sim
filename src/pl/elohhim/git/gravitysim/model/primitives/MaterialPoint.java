@@ -10,6 +10,8 @@ package pl.elohhim.git.gravitysim.model.primitives;
 public class MaterialPoint extends Geometric3DPoint {
 
 	private double mass;
+	private Vector3D speed;
+	
 	
 	/**
 	 * default constructor
@@ -17,6 +19,7 @@ public class MaterialPoint extends Geometric3DPoint {
 	public MaterialPoint() {
 		super( 0, 0, 0);
 		mass = 1.0;
+		setSpeed(new Vector3D( 0, 0, 0));
 	}
 	
 	/**
@@ -29,6 +32,7 @@ public class MaterialPoint extends Geometric3DPoint {
 	public MaterialPoint( double aCoord1, double aCoord2, double aCoord3, double aMass ) {
 		super( aCoord1, aCoord2, aCoord3);
 		mass = aMass;
+		setSpeed(new Vector3D());
 	}
 	
 	/**
@@ -43,6 +47,20 @@ public class MaterialPoint extends Geometric3DPoint {
 	 */
 	public void setMass(double mass) {
 		this.mass = mass;
+	}
+
+	/**
+	 * @return the speed
+	 */
+	public Vector3D getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(Vector3D speed) {
+		this.speed = speed;
 	}
 	
 }
