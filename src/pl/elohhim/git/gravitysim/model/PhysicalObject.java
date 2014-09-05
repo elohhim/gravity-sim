@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
+import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
 /**
  * @author elohhim
@@ -14,11 +15,16 @@ import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
  */
 public class PhysicalObject extends MaterialPoint {
 	
-	private static int counter = 1; 
+	private static int counter = 1;
+	
+	private int id;
 
 	private String name;
 	
 	private List<Force> forces;
+	
+	private Vector3D velocity;
+	
 	/**
 	 * 
 	 */
@@ -36,7 +42,22 @@ public class PhysicalObject extends MaterialPoint {
 			double aMass) {
 		super(aCoord1, aCoord2, aCoord3, aMass);
 		setForces( new ArrayList<Force>() );
-		setName( "obiekt_" + counter++ );
+		setId( counter++ );
+		setName( "obiekt_" + this.id );
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
@@ -68,6 +89,20 @@ public class PhysicalObject extends MaterialPoint {
 	}
 	
 	/**
+	 * @return the velocity
+	 */
+	public Vector3D getVelocity() {
+		return velocity;
+	}
+
+	/**
+	 * @param velocity the velocity to set
+	 */
+	public void setVelocity(Vector3D velocity) {
+		this.velocity = velocity;
+	}
+
+	/**
 	 * @param force
 	 */
 	public void addForce( Force force) {
@@ -76,5 +111,34 @@ public class PhysicalObject extends MaterialPoint {
 
 	public void cleanForces() {
 		getForces().clear();
+	}
+
+	/**
+	 * @param timeTick
+	 */
+	public void calculateDisplacement(double timeTick) {
+		Vector3D acceleration = calculateAcceleration();
+		Vector3D delta = Vector3D.scaleVector(acceleration, timeTick);
+		setVelocity( Vector3D.add(velocity, delta));
+	}
+
+	/**
+	 * @return
+	 */
+	private Vector3D calculateAcceleration() {
+		Force netForce = calculateNetForce();
+		return Vector3D.scaleVector(netForce, 1/getMass());
+	}
+
+	/**
+	 * @return
+	 */
+	private Force calculateNetForce() {
+		// TODO::
+		Force result new Force( 0, 0, 0);
+		for( Force element : forces) {
+			
+		}
+		return null;
 	}
 }
