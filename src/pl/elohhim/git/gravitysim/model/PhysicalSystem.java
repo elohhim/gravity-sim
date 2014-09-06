@@ -8,7 +8,6 @@ import java.util.List;
 
 import pl.elohhim.git.gravitysim.model.physics.gravitation.Gravitation;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.ParticleParticleGravitation;
-import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
 /**
  * @author elohhim
@@ -19,8 +18,6 @@ public class PhysicalSystem {
 	private List<PhysicalObject> objectList;
 	
 	private Gravitation gravitation;
-	
-	private static PhysicalConstants physicalConstants = new PhysicalConstants();
 	
 	/**
 	 * default constructor
@@ -35,6 +32,16 @@ public class PhysicalSystem {
 		objectList.add( new PhysicalObject( 0, 0, 0, 1));
 	}
 	
+	public void iterateTimeTick( double timeTick) {
+		// cleaning
+		for( PhysicalObject element : objectList) {
+			element.cleanForces();
+		}
+		
+		calculateGravityForces();
+		
+		moveObjects(timeTick);
+	}
 	/**
 	 * 
 	 */
@@ -46,9 +53,9 @@ public class PhysicalSystem {
 		}
 	}
 	
-	public void calculateDisplacements( double timeTick) {
+	public void moveObjects( double timeTick) {
 		for( PhysicalObject element : objectList) {
-			element.calculateDisplacement(timeTick);
+			element.moveObjectByForces(timeTick);
 		}
 	}
 	

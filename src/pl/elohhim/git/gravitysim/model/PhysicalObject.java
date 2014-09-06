@@ -114,9 +114,27 @@ public class PhysicalObject extends MaterialPoint {
 	}
 
 	/**
+	 * 
 	 * @param timeTick
 	 */
-	public void calculateDisplacement(double timeTick) {
+	public void moveObjectByForces( double timeTick) {
+		this.setRadiusVector( this.calculateDisplacement( timeTick));
+	}
+	
+	/**
+	 * 
+	 * @param timeTick
+	 * @return
+	 */
+	public Vector3D calculateDisplacement( double timeTick) {
+		calculateVelocity( timeTick);
+		Vector3D delta = Vector3D.scaleVector( getVelocity(), timeTick);
+		return delta;
+	}
+	/**
+	 * @param timeTick
+	 */
+	public void calculateVelocity(double timeTick) {
 		Vector3D acceleration = calculateAcceleration();
 		Vector3D delta = Vector3D.scaleVector(acceleration, timeTick);
 		setVelocity( Vector3D.add(velocity, delta));
@@ -135,10 +153,10 @@ public class PhysicalObject extends MaterialPoint {
 	 */
 	private Force calculateNetForce() {
 		// TODO::
-		Force result new Force( 0, 0, 0);
+		Vector3D netVector = new Vector3D();
 		for( Force element : forces) {
-			
+			netVector = Vector3D.add( netVector, element);
 		}
-		return null;
+		return new Force( netVector, "netForce");
 	}
 }
