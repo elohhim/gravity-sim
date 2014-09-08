@@ -3,15 +3,15 @@
  */
 package pl.elohhim.git.gravitysim.model.physics.gravitation;
 
-import pl.elohhim.git.gravitysim.model.Force;
-import pl.elohhim.git.gravitysim.model.PhysicalObject;
+import pl.elohhim.git.gravitysim.model.physics.Force;
+import pl.elohhim.git.gravitysim.model.physics.PhysicalObject;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
 /**
  * @author elohhim
  *
  */
-public final class ParticleParticleGravitation implements Gravitation {
+public final class ParticleParticleGravitation implements IGravitation {
 
 	private static double gravitationalConstant = Math.pow( 6.67384*10, -11.0);
 	/* (non-Javadoc)

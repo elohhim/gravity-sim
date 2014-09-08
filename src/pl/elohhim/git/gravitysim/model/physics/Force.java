@@ -1,7 +1,7 @@
 /**
  * Force.java
  */
-package pl.elohhim.git.gravitysim.model;
+package pl.elohhim.git.gravitysim.model.physics;
 
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 

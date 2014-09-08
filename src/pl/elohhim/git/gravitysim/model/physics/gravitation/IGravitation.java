@@ -3,13 +3,13 @@
  */
 package pl.elohhim.git.gravitysim.model.physics.gravitation;
 
-import pl.elohhim.git.gravitysim.model.PhysicalObject;
+import pl.elohhim.git.gravitysim.model.physics.PhysicalObject;
 
 /**
  * @author elohhim
  *
  */
-public interface Gravitation {
+public interface IGravitation {
 		
 	/**
 	 * adding gravitational interaction between two PhysicalObjects 

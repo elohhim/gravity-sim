@@ -1,12 +1,12 @@
 /**
  * PhysicalSystem.java
  */
-package pl.elohhim.git.gravitysim.model;
+package pl.elohhim.git.gravitysim.model.physics;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.elohhim.git.gravitysim.model.physics.gravitation.Gravitation;
+import pl.elohhim.git.gravitysim.model.physics.gravitation.IGravitation;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.ParticleParticleGravitation;
 
 /**
@@ -17,7 +17,7 @@ public class PhysicalSystem {
 
 	private List<PhysicalObject> objectList;
 	
-	private Gravitation gravitation;
+	private IGravitation gravitation;
 	
 	/**
 	 * default constructor

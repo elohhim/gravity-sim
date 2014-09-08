@@ -1,7 +1,7 @@
 /**
  * PhysicalObject.java
  */
-package pl.elohhim.git.gravitysim.model;
+package pl.elohhim.git.gravitysim.model.physics;
 
 import java.util.ArrayList;
 import java.util.List;
