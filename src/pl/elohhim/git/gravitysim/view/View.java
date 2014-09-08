@@ -8,7 +8,7 @@ import java.util.concurrent.BlockingQueue;
 import javax.swing.SwingUtilities;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
-import pl.elohhim.git.gravitysim.events.SimulationEvent;
+import pl.elohhim.git.gravitysim.events.ProgramEvent;
 
 /**
  * @author elohhim
@@ -16,7 +16,7 @@ import pl.elohhim.git.gravitysim.events.SimulationEvent;
  */
 public class View {
 
-	private final BlockingQueue<SimulationEvent> blockingQueue;
+	private final BlockingQueue<ProgramEvent> blockingQueue;
 	
 	private AppFrame frame;
 		
@@ -26,7 +26,7 @@ public class View {
 	 * @param blockingQueue - queue for communication with controller
 	 * @param mockup - lightweight representation of model
 	 */
-	public View(final BlockingQueue<SimulationEvent> blockingQueue, final Mockup mockup){
+	public View(final BlockingQueue<ProgramEvent> blockingQueue, final Mockup mockup){
 		this.blockingQueue = blockingQueue;
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override

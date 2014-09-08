@@ -8,6 +8,7 @@ import java.util.List;
 
 import pl.elohhim.git.gravitysim.model.physics.gravitation.IGravitation;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.ParticleParticleGravitation;
+import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
 /**
  * @author elohhim
@@ -28,8 +29,11 @@ public class PhysicalSystem {
 	}
 	
 	public void populateSystem() {
-		objectList.add( new PhysicalObject( 1, 1, 1, 2));
-		objectList.add( new PhysicalObject( 0, 0, 0, 1));
+		PhysicalObject p1 = new PhysicalObject(0,0,0,2000);
+		p1.setVelocity( new Vector3D(0,0,0));
+		p1.getStaticForces().add( new Force(10,0,0));
+		objectList.add( p1);
+		//objectList.add( new PhysicalObject( 0, 0, 0, 1000));
 	}
 	
 	public void iterateTimeTick( double timeTick) {
@@ -49,14 +53,33 @@ public class PhysicalSystem {
 		for( int i = 0; i < objectList.size() - 1; i++ ) {
 			for( int j = i+1; j < objectList.size(); j++) {
 				gravitation.gravitationalInteraction( objectList.get(i), objectList.get(j) );
+				System.out.println("Added interaction: " + i + "-" + j );
 			}
 		}
 	}
 	
 	public void moveObjects( double timeTick) {
 		for( PhysicalObject element : objectList) {
-			element.moveObjectByForces(timeTick);
+			element.moveObject(timeTick);
 		}
+	}
+
+	public ArrayList<Double> getCoords() {
+		ArrayList<Double> coords = new ArrayList<Double>();
+		for ( PhysicalObject element : objectList) {
+			coords.add(element.getCoordinate(0) );
+			coords.add(element.getCoordinate(1) );
+			coords.add(element.getCoordinate(2) );
+		}
+		return coords;
+	}
+
+	public ArrayList<String> getNames() {
+		ArrayList<String> names = new ArrayList<String>();
+		for ( PhysicalObject element : objectList) {
+			names.add(element.getName() );
+		}
+		return names;
 	}
 	
 }

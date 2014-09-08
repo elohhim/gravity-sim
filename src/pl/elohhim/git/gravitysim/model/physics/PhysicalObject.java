@@ -5,6 +5,7 @@ package pl.elohhim.git.gravitysim.model.physics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
@@ -22,6 +23,8 @@ public class PhysicalObject extends MaterialPoint {
 	private String name;
 	
 	private List<Force> forces;
+	
+	private List<Force> staticForces;
 	
 	private Vector3D velocity;
 	
@@ -42,6 +45,8 @@ public class PhysicalObject extends MaterialPoint {
 			double aMass) {
 		super(aCoord1, aCoord2, aCoord3, aMass);
 		setForces( new ArrayList<Force>() );
+		setStaticForces( new ArrayList<Force>() );
+		setVelocity( new Vector3D());
 		setId( counter++ );
 		setName( "obiekt_" + this.id );
 	}
@@ -117,8 +122,8 @@ public class PhysicalObject extends MaterialPoint {
 	 * 
 	 * @param timeTick
 	 */
-	public void moveObjectByForces( double timeTick) {
-		this.setRadiusVector( this.calculateDisplacement( timeTick));
+	public void moveObject( double timeTick) {
+		this.setRadiusVector( Vector3D.add(this.getRadiusVector(), this.calculateDisplacement(timeTick)));
 	}
 	
 	/**
@@ -127,7 +132,7 @@ public class PhysicalObject extends MaterialPoint {
 	 * @return
 	 */
 	public Vector3D calculateDisplacement( double timeTick) {
-		calculateVelocity( timeTick);
+		calculateVelocity(timeTick);
 		Vector3D delta = Vector3D.scaleVector( getVelocity(), timeTick);
 		return delta;
 	}
@@ -157,6 +162,24 @@ public class PhysicalObject extends MaterialPoint {
 		for( Force element : forces) {
 			netVector = Vector3D.add( netVector, element);
 		}
+		for( Force element : staticForces) {
+			netVector = Vector3D.add( netVector, element);
+		}
+		
 		return new Force( netVector, "netForce");
+	}
+
+	/**
+	 * @return the staticForces
+	 */
+	public List<Force> getStaticForces() {
+		return staticForces;
+	}
+
+	/**
+	 * @param staticForces the staticForces to set
+	 */
+	public void setStaticForces(List<Force> staticForces) {
+		this.staticForces = staticForces;
 	}
 }

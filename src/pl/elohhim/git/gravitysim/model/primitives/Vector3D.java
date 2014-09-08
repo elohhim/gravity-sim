@@ -106,8 +106,8 @@ public class Vector3D {
 	 */
 	public static Vector3D scaleVector(Vector3D vector, double scalar) {
 		Vector3D result = new Vector3D();
-		for(int i = 0; i<3; i++) {
-			result.getComponents()[i] = vector.getComponents()[i]*scalar;
+		for(int i = 0; i<3 ; i++) {
+			result.getComponents()[i] = vector.getComponents()[i] * scalar;
 		}
 		return result;
 	}
@@ -122,7 +122,7 @@ public class Vector3D {
 	public double value() {
 		double sum = 0;
 		for ( int i = 0; i<3; i++) {
-			sum+=Math.pow(this.getComponents()[i], 2.0);
+			sum += Math.pow(this.getComponents()[i], 2.0);
 		}
 		return Math.sqrt(sum);
 	}
