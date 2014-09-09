@@ -5,7 +5,6 @@ package pl.elohhim.git.gravitysim.model.physics;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
@@ -22,11 +21,13 @@ public class PhysicalObject extends MaterialPoint {
 
 	private String name;
 	
-	private List<Force> forces;
+	private List<Force> gravityForces;
 	
 	private List<Force> staticForces;
 	
 	private Vector3D velocity;
+	
+	private Vector3D acceleration;
 	
 	/**
 	 * 
@@ -44,9 +45,10 @@ public class PhysicalObject extends MaterialPoint {
 	public PhysicalObject(double aCoord1, double aCoord2, double aCoord3,
 			double aMass) {
 		super(aCoord1, aCoord2, aCoord3, aMass);
-		setForces( new ArrayList<Force>() );
+		setGravityForces( new ArrayList<Force>() );
 		setStaticForces( new ArrayList<Force>() );
-		setVelocity( new Vector3D());
+		setVelocity( new Vector3D() );
+		setAcceleration( new Vector3D() );
 		setId( counter++ );
 		setName( "obiekt_" + this.id );
 	}
@@ -82,15 +84,15 @@ public class PhysicalObject extends MaterialPoint {
 	/**
 	 * @return the forces
 	 */
-	public List<Force> getForces() {
-		return forces;
+	public List<Force> getGravityForces() {
+		return gravityForces;
 	}
 
 	/**
 	 * @param forces the forces to set
 	 */
-	public void setForces(List<Force> forces) {
-		this.forces = forces;
+	public void setGravityForces(List<Force> forces) {
+		this.gravityForces = forces;
 	}
 	
 	/**
@@ -108,22 +110,41 @@ public class PhysicalObject extends MaterialPoint {
 	}
 
 	/**
+	 * @return the acceleration
+	 */
+	public Vector3D getAcceleration() {
+		return acceleration;
+	}
+
+	/**
+	 * @param acceleration the acceleration to set
+	 */
+	public void setAcceleration(Vector3D acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	/**
 	 * @param force
 	 */
 	public void addForce( Force force) {
-		getForces().add( force );
+		getGravityForces().add( force );
 	}
 
-	public void cleanForces() {
-		getForces().clear();
+	public void cleanGravityForces() {
+		getGravityForces().clear();
 	}
 
+	public void iterateTimeTick( double timeTick) {
+		moveObject( timeTick );
+		calculateVelocity( timeTick );
+		calculateAcceleration();
+	}
 	/**
 	 * 
 	 * @param timeTick
 	 */
-	public void moveObject( double timeTick) {
-		this.setRadiusVector( Vector3D.add(this.getRadiusVector(), this.calculateDisplacement(timeTick)));
+	public void moveObject( double timeTick ) {
+		this.setRadiusVector( Vector3D.add( this.getRadiusVector(), this.calculateDisplacement( timeTick ) ) );
 	}
 	
 	/**
@@ -131,26 +152,28 @@ public class PhysicalObject extends MaterialPoint {
 	 * @param timeTick
 	 * @return
 	 */
-	public Vector3D calculateDisplacement( double timeTick) {
-		calculateVelocity(timeTick);
-		Vector3D delta = Vector3D.scaleVector( getVelocity(), timeTick);
-		return delta;
+	public Vector3D calculateDisplacement( double timeTick ) {
+		//uniform motion
+		Vector3D uniformDelta = Vector3D.scaleVector( getVelocity(), timeTick );
+		
+		//accelerated motion
+		Vector3D acceleratedDelta = Vector3D.scaleVector( getAcceleration(), Math.pow( timeTick, 2.0 )/2 );
+		return Vector3D.add( uniformDelta, acceleratedDelta );
 	}
 	/**
 	 * @param timeTick
 	 */
-	public void calculateVelocity(double timeTick) {
-		Vector3D acceleration = calculateAcceleration();
-		Vector3D delta = Vector3D.scaleVector(acceleration, timeTick);
-		setVelocity( Vector3D.add(velocity, delta));
+	public void calculateVelocity( double timeTick ) {
+		Vector3D deltaV = Vector3D.scaleVector( getAcceleration(), timeTick );
+		setVelocity( Vector3D.add( velocity, deltaV ) );
 	}
 
 	/**
 	 * @return
 	 */
-	private Vector3D calculateAcceleration() {
+	private void calculateAcceleration() {
 		Force netForce = calculateNetForce();
-		return Vector3D.scaleVector(netForce, 1/getMass());
+		setAcceleration( Vector3D.scaleVector( netForce, 1/getMass() ) );
 	}
 
 	/**
@@ -159,7 +182,7 @@ public class PhysicalObject extends MaterialPoint {
 	private Force calculateNetForce() {
 		// TODO::
 		Vector3D netVector = new Vector3D();
-		for( Force element : forces) {
+		for( Force element : gravityForces) {
 			netVector = Vector3D.add( netVector, element);
 		}
 		for( Force element : staticForces) {

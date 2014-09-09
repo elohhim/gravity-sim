@@ -13,7 +13,7 @@ import pl.elohhim.git.gravitysim.view.View;
  */
 
 /**
- * @author admin
+ * @author elohhim
  *
  */
 public final class Application {

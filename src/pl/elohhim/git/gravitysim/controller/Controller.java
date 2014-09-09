@@ -4,8 +4,6 @@
 package pl.elohhim.git.gravitysim.controller;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,7 +54,7 @@ public class Controller {
 				}
 			},
 			0,
-			100);
+			1000);
 		eventActionMap = new HashMap<Class<? extends ProgramEvent>, ProgramAction>();
 		fillEventActionMap();
 	}

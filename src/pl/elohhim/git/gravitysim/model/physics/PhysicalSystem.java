@@ -29,38 +29,31 @@ public class PhysicalSystem {
 	}
 	
 	public void populateSystem() {
-		PhysicalObject p1 = new PhysicalObject(0,0,0,2000);
-		p1.setVelocity( new Vector3D(0,0,0));
-		p1.getStaticForces().add( new Force(10,0,0));
+		PhysicalObject p1 = new PhysicalObject(0,0,0,1);
+		p1.getStaticForces().add( new Force(1,0,0));
 		objectList.add( p1);
 		//objectList.add( new PhysicalObject( 0, 0, 0, 1000));
 	}
 	
 	public void iterateTimeTick( double timeTick) {
-		// cleaning
-		for( PhysicalObject element : objectList) {
-			element.cleanForces();
-		}
-		
 		calculateGravityForces();
-		
-		moveObjects(timeTick);
+		for( PhysicalObject element : objectList) {
+			element.iterateTimeTick(timeTick);
+		}
 	}
 	/**
 	 * 
 	 */
 	public void calculateGravityForces() {
+		// cleaning
+		for( PhysicalObject element : objectList) {
+			element.cleanGravityForces();
+		}
 		for( int i = 0; i < objectList.size() - 1; i++ ) {
 			for( int j = i+1; j < objectList.size(); j++) {
 				gravitation.gravitationalInteraction( objectList.get(i), objectList.get(j) );
 				System.out.println("Added interaction: " + i + "-" + j );
 			}
-		}
-	}
-	
-	public void moveObjects( double timeTick) {
-		for( PhysicalObject element : objectList) {
-			element.moveObject(timeTick);
 		}
 	}
 
