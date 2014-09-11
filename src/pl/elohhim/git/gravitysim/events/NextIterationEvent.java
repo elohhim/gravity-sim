@@ -7,7 +7,7 @@ public class NextIterationEvent extends ProgramEvent{
 	private double timePassed;
 	
 	public NextIterationEvent( double timePassed) {
-		NextIterationEvent.iterationCounter++;
+		id = NextIterationEvent.iterationCounter++;
 		this.timePassed = timePassed;
 	}
 

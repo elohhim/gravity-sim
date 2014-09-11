@@ -48,13 +48,13 @@ public class Controller {
 			new TimerTask() {
 				@Override
 				public void run() {
-					blockingQueue.add( new NextIterationEvent( 0.01 ) );
-					if ( NextIterationEvent.getIterationCounter() >= 10 )
+					blockingQueue.add( new NextIterationEvent( 1 ) );
+					if ( NextIterationEvent.getIterationCounter() >= 10000 )
 						this.cancel();
 				}
 			},
 			0,
-			1000);
+			1);
 		eventActionMap = new HashMap<Class<? extends ProgramEvent>, ProgramAction>();
 		fillEventActionMap();
 	}
@@ -92,7 +92,7 @@ public class Controller {
 			public void go(ProgramEvent event)
 			{
 				NextIterationEvent nIE = (NextIterationEvent) event;
-				System.out.println( "Iteration " + NextIterationEvent.getIterationCounter());
+				System.out.println( "Iteration " + event.getId() );
 				Mockup mockup = model.getMockup();
 				for( int i = 0; i < mockup.names.size(); i++) {
 					System.out.println( 

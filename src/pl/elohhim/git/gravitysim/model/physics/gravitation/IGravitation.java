@@ -3,6 +3,7 @@
  */
 package pl.elohhim.git.gravitysim.model.physics.gravitation;
 
+import pl.elohhim.git.gravitysim.model.physics.Force;
 import pl.elohhim.git.gravitysim.model.physics.PhysicalObject;
 
 /**
@@ -16,7 +17,7 @@ public interface IGravitation {
 	 * @param object1
 	 * @param object2
 	 */
-	public abstract void gravitationalInteraction(PhysicalObject object1, PhysicalObject object2);
+	public abstract Force gravitationalInteraction(PhysicalObject object1, PhysicalObject object2);
 	
 	/**
 	 * returns value of gravitational constant

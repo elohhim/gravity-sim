@@ -13,12 +13,12 @@ import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
  */
 public final class ParticleParticleGravitation implements IGravitation {
 
-	private static double gravitationalConstant = Math.pow( 6.67384*10, -11.0);
+	private static double gravitationalConstant = 6.67384e-11;
 	/* (non-Javadoc)
 	 * @see pl.elohhim.git.gravitysim.model.physics.Gravitation#gravitationalInteraction(pl.elohhim.git.gravitysim.model.PhysicalObject, pl.elohhim.git.gravitysim.model.PhysicalObject)
 	 */
 	@Override
-	public void gravitationalInteraction(PhysicalObject object1,
+	public Force gravitationalInteraction(PhysicalObject object1,
 			PhysicalObject object2) {
 		//calculating distance between objects
 		Vector3D distance = Vector3D.subtract(object2.getRadiusVector(), object1.getRadiusVector());
@@ -26,7 +26,7 @@ public final class ParticleParticleGravitation implements IGravitation {
 		//calculating gravity force
 		double gravityNumerator = ParticleParticleGravitation.gravitationalConstant * object1.getMass() * object2.getMass();
 		double gravityDenominator = Math.pow( distance.value(), 2.0);
-		double gravityValue = gravityDenominator / gravityNumerator;
+		double gravityValue = gravityNumerator/gravityDenominator;
 				
 		//adding interaction to 1st object
 		String name12 = object1.getName() + "_" + object2.getName();
@@ -34,9 +34,11 @@ public final class ParticleParticleGravitation implements IGravitation {
 		object1.addForce(interaction12);
 				
 		//adding interaction to 2nd object
-		String name21 = object1.getName() + "-" + object2.getName();
+		String name21 = object2.getName() + "-" + object1.getName();
 		Force interaction21 = new Force( Vector3D.scaleVector( distance.versor(), -gravityValue), name21);
 		object2.addForce(interaction21);
+		
+		return interaction12;
 
 	}
 

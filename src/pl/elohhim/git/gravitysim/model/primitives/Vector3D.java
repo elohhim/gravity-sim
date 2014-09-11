@@ -29,7 +29,12 @@ public class Vector3D {
 		components[1] = a2;
 		components[2] = a3;
 	}
-		
+	
+	@Override
+	public String toString() {
+		return new String("Vector: " + components[0] + "; " + components[1] + "; " + components[2]);
+	}
+	
 	/**
 	 * @return the components
 	 */
