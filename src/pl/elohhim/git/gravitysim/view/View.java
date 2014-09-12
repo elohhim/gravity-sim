@@ -31,8 +31,8 @@ public class View {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame = new AppFrame();
-				refresh( mockup );
+				frame = new AppFrame(blockingQueue, mockup);
+				frame.setVisible(true);
 			}
 		});
 	}
@@ -42,14 +42,9 @@ public class View {
 	 * 
 	 * @param mockup - lightweight representation of model
 	 */
-	public void refresh(final Mockup mockup){
-		SwingUtilities.invokeLater(new Runnable() {		
-			@Override
-			public void run() {
-				frame.setSize( 200, 200);
-				frame.setVisible(true);
-			}
-		});
+	public void refresh(final Mockup mockup) {
+			frame.setMockup(mockup);
+			//frame.repaint();
 	}
 
 }

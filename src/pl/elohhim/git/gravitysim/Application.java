@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import pl.elohhim.git.gravitysim.controller.Controller;
+import pl.elohhim.git.gravitysim.events.NextIterationEvent;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
 import pl.elohhim.git.gravitysim.model.Model;
 import pl.elohhim.git.gravitysim.view.View;
@@ -22,8 +23,9 @@ public final class Application {
 	 */
 	public static void main(String[] args) {
 		try{
-			final Model model = new Model();
 			final BlockingQueue<ProgramEvent> blockingQueue  = new LinkedBlockingQueue<ProgramEvent>();
+			blockingQueue.add( new NextIterationEvent(1000));
+			final Model model = new Model(blockingQueue);
 			final View view = new View(blockingQueue, model.getMockup());
 			final Controller controller = new Controller(view,model,blockingQueue);
 			controller.work();

@@ -5,8 +5,6 @@ package pl.elohhim.git.gravitysim.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
@@ -25,8 +23,6 @@ public class Controller {
 	private final View view;
 	/** reference to Model from MVC*/
 	private final Model model;
-	/** timer */
-	private final Timer timer; 
 	/**queue for ProgramEvent.*/
 	private final BlockingQueue<ProgramEvent> blockingQueue;
 	/**mapping of objects ProgramEvent to objects ProgramAction*/
@@ -43,18 +39,6 @@ public class Controller {
 		this.view = view;
 		this.model = model;
 		this.blockingQueue = blockingQueue;
-		this.timer = new Timer();
-		timer.schedule( 
-			new TimerTask() {
-				@Override
-				public void run() {
-					blockingQueue.add( new NextIterationEvent( 1 ) );
-					if ( NextIterationEvent.getIterationCounter() >= 10000 )
-						this.cancel();
-				}
-			},
-			0,
-			1);
 		eventActionMap = new HashMap<Class<? extends ProgramEvent>, ProgramAction>();
 		fillEventActionMap();
 	}
@@ -66,6 +50,7 @@ public class Controller {
 	 */
 	public void work()
 	{	
+		
 		while(true)
 		{
 			try
@@ -77,7 +62,7 @@ public class Controller {
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				throw new RuntimeException(e);
+				//throw new RuntimeException(e);
 			}
 		}
 	}
@@ -104,8 +89,8 @@ public class Controller {
 							" " +
 							mockup.coordinates.get( 3*i + 2));
 				}
-				model.iterate( nIE.getTimePassed() );
 				view.refresh( mockup );
+				model.iterate( nIE.getTimePassed() );
 			}
 		});
 	}//*/
