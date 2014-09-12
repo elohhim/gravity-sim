@@ -10,6 +10,8 @@ import java.util.concurrent.BlockingQueue;
 import pl.elohhim.git.gravitysim.commons.Mockup;
 import pl.elohhim.git.gravitysim.events.NextIterationEvent;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
+import pl.elohhim.git.gravitysim.events.StartSimulationEvent;
+import pl.elohhim.git.gravitysim.events.ViewRefreshEvent;
 import pl.elohhim.git.gravitysim.model.Model;
 import pl.elohhim.git.gravitysim.view.View;
 
@@ -76,10 +78,11 @@ public class Controller {
 		{
 			public void go(ProgramEvent event)
 			{
-				NextIterationEvent nIE = (NextIterationEvent) event;
-				System.out.println( "Iteration " + event.getId() );
+				NextIterationEvent nIE = ( NextIterationEvent ) event;
+				//System.out.println( "Iteration " + event.getId() );
+				model.iterate( nIE.getTimePassed() );
 				Mockup mockup = model.getMockup();
-				for( int i = 0; i < mockup.names.size(); i++) {
+				/*for( int i = 0; i < mockup.names.size(); i++) {
 					System.out.println( 
 							mockup.names.get( i ) + 
 							": " +
@@ -88,9 +91,28 @@ public class Controller {
 							mockup.coordinates.get( 3*i+1) +
 							" " +
 							mockup.coordinates.get( 3*i + 2));
-				}
-				view.refresh( mockup );
-				model.iterate( nIE.getTimePassed() );
+				}*/
+				if ( nIE.getIterationId() % 600 == 0 )
+					blockingQueue.add( new ViewRefreshEvent( mockup ) );
+				blockingQueue.add( new NextIterationEvent( 1 ) );
+			}
+		});
+		
+		eventActionMap.put(ViewRefreshEvent.class, new ProgramAction() 
+		{
+			public void go(ProgramEvent event) {
+				ViewRefreshEvent vRE = ( ViewRefreshEvent ) event;
+				view.refresh( vRE.mockup );
+			}
+		});
+		
+		eventActionMap.put( StartSimulationEvent.class, new ProgramAction() 
+		{
+			public void go(ProgramEvent event) {
+				@SuppressWarnings("unused")
+				StartSimulationEvent sSE = ( StartSimulationEvent) event;
+				
+				blockingQueue.add( new NextIterationEvent( 1 ) );
 			}
 		});
 	}//*/

@@ -25,6 +25,8 @@ public class PhysicalObject extends MaterialPoint {
 	
 	private List<Force> staticForces;
 	
+	private Force netForce;
+	
 	private Vector3D velocity;
 	
 	private Vector3D acceleration;
@@ -172,8 +174,8 @@ public class PhysicalObject extends MaterialPoint {
 	 * @return
 	 */
 	private void calculateAcceleration() {
-		Force netForce = calculateNetForce();
-		setAcceleration( Vector3D.scaleVector( netForce, 1/getMass() ) );
+		calculateNetForce();
+		setAcceleration( Vector3D.scaleVector( this.netForce, 1/getMass() ) );
 	}
 
 	/**
@@ -189,7 +191,8 @@ public class PhysicalObject extends MaterialPoint {
 			netVector = Vector3D.add( netVector, element);
 		}
 		
-		return new Force( netVector, "netForce");
+		this.netForce = new Force( netVector, "netForce");
+		return netForce;
 	}
 
 	/**

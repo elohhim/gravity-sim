@@ -5,6 +5,7 @@ public class KeyPressedEvent extends ProgramEvent {
 	
 	public KeyPressedEvent( int keyCode )
 	{
+		super();
 		this.setKeyCode(keyCode);
 	}
 

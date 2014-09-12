@@ -39,7 +39,7 @@ public class Model {
 	
 	public void iterate( double timeTick) {
 		physicalSystem.iterateTimeTick( timeTick);
-		blockingQueue.add( new NextIterationEvent(1) );
+		//blockingQueue.add( new NextIterationEvent(1) );
 	}
 
 }

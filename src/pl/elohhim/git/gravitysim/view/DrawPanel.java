@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -66,10 +65,9 @@ private Mockup mockup;
 			if ( mockup.coordinates.get(i) >= maximumCoordinates[i%3])
 				maximumCoordinates[i%3] = mockup.coordinates.get(i);
 		}
-		System.out.println( maximumCoordinates.toString());
 		
-		double scaleFactor1 = (double) widthInPixels / ( 4*maximumCoordinates[0] );
-		double scaleFactor2 = (double) heightInPixels / ( 4*maximumCoordinates[1] );
+		double scaleFactor1 = (double) widthInPixels / ( 10*maximumCoordinates[0] );
+		double scaleFactor2 = (double) heightInPixels / ( 10*maximumCoordinates[1] );
 		return ( scaleFactor1<scaleFactor2 )?scaleFactor1:scaleFactor2;
 	}
 }

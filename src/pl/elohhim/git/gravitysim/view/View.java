@@ -44,7 +44,7 @@ public class View {
 	 */
 	public void refresh(final Mockup mockup) {
 			frame.setMockup(mockup);
-			//frame.repaint();
+			frame.repaint();
 	}
 
 }
