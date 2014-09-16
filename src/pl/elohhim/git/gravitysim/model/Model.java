@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
-import pl.elohhim.git.gravitysim.events.NextIterationEvent;
+import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
 import pl.elohhim.git.gravitysim.model.physics.PhysicalSystem;
 
@@ -32,9 +32,9 @@ public class Model {
 	 * @return
 	 */
 	public Mockup getMockup() {
-		ArrayList<Double> coords = physicalSystem.getCoords();
 		ArrayList<String> names = physicalSystem.getNames();
-		return new Mockup( names, coords);
+		ArrayList<PhysicalObjectMockup> objects = physicalSystem.getObjectsMockups();
+		return new Mockup( names, objects);
 	}
 	
 	public void iterate( double timeTick) {

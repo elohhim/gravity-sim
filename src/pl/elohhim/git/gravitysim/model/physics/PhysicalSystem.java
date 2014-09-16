@@ -6,6 +6,7 @@ package pl.elohhim.git.gravitysim.model.physics;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.IGravitation;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.ParticleParticleGravitation;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
@@ -60,22 +61,23 @@ public class PhysicalSystem {
 		}
 	}
 
-	public ArrayList<Double> getCoords() {
-		ArrayList<Double> coords = new ArrayList<Double>();
-		for ( PhysicalObject element : objectList) {
-			coords.add(element.getCoordinate(0) );
-			coords.add(element.getCoordinate(1) );
-			coords.add(element.getCoordinate(2) );
-		}
-		return coords;
-	}
-
 	public ArrayList<String> getNames() {
 		ArrayList<String> names = new ArrayList<String>();
 		for ( PhysicalObject element : objectList) {
 			names.add(element.getName() );
 		}
 		return names;
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList<PhysicalObjectMockup> getObjectsMockups() {
+		ArrayList<PhysicalObjectMockup> mockupsList = new ArrayList<PhysicalObjectMockup>();
+		for( PhysicalObject element : this.objectList) {
+			mockupsList.add( element.getMockup() );
+		}
+		return mockupsList;
 	}
 	
 }

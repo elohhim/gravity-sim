@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Mockup {
 	public List<String> names;
-	public List<Double> coordinates;
+	public List<PhysicalObjectMockup> objectsMockup;
 	
-	public Mockup(List<String> names, List<Double> coordinates) {
+	public Mockup(List<String> names, List<PhysicalObjectMockup> objectsMockup) {
 		super();
 		this.names = names;
-		this.coordinates = coordinates;
+		this.objectsMockup = objectsMockup; 
 	}
 	
 	

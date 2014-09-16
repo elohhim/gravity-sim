@@ -15,6 +15,7 @@ import pl.elohhim.git.gravitysim.events.ProgramEvent;
  * @author elohhim
  *
  */
+@SuppressWarnings("serial")
 public class AppFrame extends JFrame {
 	private BlockingQueue<ProgramEvent> blockingQueue;
 	private Mockup mockup;
@@ -29,7 +30,7 @@ public class AppFrame extends JFrame {
 	private void initialize()
 	{
 		this.setBounds(100, 100, 400, 400);
-		//this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout( new BorderLayout() );
 		this.setVisible( true );
@@ -42,6 +43,9 @@ public class AppFrame extends JFrame {
 				blockingQueue.add( new KeyPressedEvent( e.getKeyCode()) );
 			}
 		});*/
+		SimulationPlayer player = new SimulationPlayer( blockingQueue );
+		
+		this.add( player, BorderLayout.PAGE_END);
 	}
 
 	public Mockup getMockup() {

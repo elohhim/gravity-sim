@@ -24,4 +24,11 @@ public class ProgramEvent {
 		return id;
 	}
 
+	/**
+	 * @return
+	 */
+	public static long getCounter() {
+		return ProgramEvent.eventCounter;
+	}
+
 }

@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
+import pl.elohhim.git.gravitysim.events.ViewReadyEvent;
 
 /**
  * @author elohhim
@@ -33,6 +34,7 @@ public class View {
 			public void run() {
 				frame = new AppFrame(blockingQueue, mockup);
 				frame.setVisible(true);
+				blockingQueue.add( new ViewReadyEvent() );
 			}
 		});
 	}
@@ -43,8 +45,12 @@ public class View {
 	 * @param mockup - lightweight representation of model
 	 */
 	public void refresh(final Mockup mockup) {
+		try {
 			frame.setMockup(mockup);
-			frame.repaint();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		frame.repaint();
 	}
 
 }

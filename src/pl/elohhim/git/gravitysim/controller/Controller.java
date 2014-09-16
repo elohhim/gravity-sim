@@ -11,6 +11,7 @@ import pl.elohhim.git.gravitysim.commons.Mockup;
 import pl.elohhim.git.gravitysim.events.NextIterationEvent;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
 import pl.elohhim.git.gravitysim.events.StartSimulationEvent;
+import pl.elohhim.git.gravitysim.events.ViewReadyEvent;
 import pl.elohhim.git.gravitysim.events.ViewRefreshEvent;
 import pl.elohhim.git.gravitysim.model.Model;
 import pl.elohhim.git.gravitysim.view.View;
@@ -29,6 +30,8 @@ public class Controller {
 	private final BlockingQueue<ProgramEvent> blockingQueue;
 	/**mapping of objects ProgramEvent to objects ProgramAction*/
 	private final Map<Class<? extends ProgramEvent>, ProgramAction> eventActionMap;
+	
+	private static double timeTick = 1;
 	
 	/**
 	 * creates object of Controller type
@@ -49,22 +52,23 @@ public class Controller {
 	 * infinite loop to intercept events from view
 	 * <br> it takes events from blockingQueue and using eventActionMap 
 	 * starts action handling this event
+	 * @throws InterruptedException 
 	 */
-	public void work()
+	public void work() throws InterruptedException
 	{	
-		
+		ProgramEvent event = null;
 		while(true)
 		{
 			try
 			{
-				ProgramEvent event = blockingQueue.take();
+				event = blockingQueue.take();
 				ProgramAction action = eventActionMap.get(event.getClass());
 				action.go(event);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				//throw new RuntimeException(e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -74,9 +78,10 @@ public class Controller {
 	 */
 	private void fillEventActionMap()
 	{
-		eventActionMap.put(NextIterationEvent.class, new ProgramAction()
+		eventActionMap.put( NextIterationEvent.class, new ProgramAction()
 		{
-			public void go(ProgramEvent event)
+			@Override
+			public void go( ProgramEvent event )
 			{
 				NextIterationEvent nIE = ( NextIterationEvent ) event;
 				//System.out.println( "Iteration " + event.getId() );
@@ -94,13 +99,14 @@ public class Controller {
 				}*/
 				if ( nIE.getIterationId() % 600 == 0 )
 					blockingQueue.add( new ViewRefreshEvent( mockup ) );
-				blockingQueue.add( new NextIterationEvent( 1 ) );
+				blockingQueue.add( new NextIterationEvent( Controller.timeTick ) );
 			}
 		});
 		
-		eventActionMap.put(ViewRefreshEvent.class, new ProgramAction() 
+		eventActionMap.put( ViewRefreshEvent.class, new ProgramAction() 
 		{
-			public void go(ProgramEvent event) {
+			@Override
+			public void go( ProgramEvent event ) {
 				ViewRefreshEvent vRE = ( ViewRefreshEvent ) event;
 				view.refresh( vRE.mockup );
 			}
@@ -108,12 +114,24 @@ public class Controller {
 		
 		eventActionMap.put( StartSimulationEvent.class, new ProgramAction() 
 		{
-			public void go(ProgramEvent event) {
+			@Override
+			public void go( ProgramEvent event ) {
 				@SuppressWarnings("unused")
 				StartSimulationEvent sSE = ( StartSimulationEvent) event;
-				
-				blockingQueue.add( new NextIterationEvent( 1 ) );
+				blockingQueue.add( new NextIterationEvent( Controller.timeTick ) );
 			}
+		});
+		
+		eventActionMap.put( ViewReadyEvent.class, new ProgramAction() {
+
+			@Override
+			public void go( ProgramEvent event ) {
+				@SuppressWarnings("unused")
+				ViewReadyEvent vRE = ( ViewReadyEvent ) event;
+				
+				//blockingQueue.add( new StartSimulationEvent() );
+			}
+			
 		});
 	}//*/
 

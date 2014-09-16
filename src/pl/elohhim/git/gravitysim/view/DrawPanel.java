@@ -6,14 +6,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.util.List;
+import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
+import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 
 
+@SuppressWarnings("serial")
 public class DrawPanel extends JPanel {
 private Mockup mockup;
 	
@@ -40,18 +42,22 @@ private Mockup mockup;
         drawPhysicalObjects( g2d, scaleFactor);
 	}
 	private void drawPhysicalObjects(Graphics2D g2d, double scaleFactor) {
-		List<Double> coordinates = this.mockup.coordinates;
 		Ellipse2D e;
+		Line2D l;
 		double X;
 		double Y;
-		for( int i = 0; i < coordinates.size(); i+=3 ){
-			X = coordinates.get(i);
-			Y = coordinates.get(i+1);
-			e = new Ellipse2D.Double( X*scaleFactor+this.getWidth()/2,Y*scaleFactor+this.getHeight()/2,10,10);
+		for( PhysicalObjectMockup element : mockup.objectsMockup) {
+			X = element.coordinates[0]*scaleFactor+this.getWidth()/2;
+			Y = element.coordinates[1]*scaleFactor+this.getHeight()/2;
+			
+			e = new Ellipse2D.Double( X-5,Y-5,10,10);
 			g2d.setColor( Color.red );
 	    	g2d.fill(e);
-	    	g2d.setColor( Color.black);
+	    	g2d.setColor( Color.black );
 	    	g2d.draw(e);
+			l = new Line2D.Double(X, Y, X+element.netForceVersor[0]*10, Y+element.netForceVersor[1]*10);
+			g2d.setColor( Color.green );
+			g2d.draw(l);
 		}
 	}
 
@@ -61,9 +67,12 @@ private Mockup mockup;
 		
 		double[] maximumCoordinates = new double[3];
 		
-		for(int i=0; i < mockup.coordinates.size(); i++) {
-			if ( mockup.coordinates.get(i) >= maximumCoordinates[i%3])
-				maximumCoordinates[i%3] = mockup.coordinates.get(i);
+		for( PhysicalObjectMockup element : mockup.objectsMockup ) {
+			for( int i = 0; i < 2; i++) {
+				if( maximumCoordinates[i%3] < element.coordinates[i]) {
+					maximumCoordinates[i%3] = element.coordinates[i];
+				}
+			}
 		}
 		
 		double scaleFactor1 = (double) widthInPixels / ( 10*maximumCoordinates[0] );

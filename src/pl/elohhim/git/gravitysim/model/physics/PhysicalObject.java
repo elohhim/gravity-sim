@@ -6,6 +6,7 @@ package pl.elohhim.git.gravitysim.model.physics;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
@@ -49,6 +50,7 @@ public class PhysicalObject extends MaterialPoint {
 		super(aCoord1, aCoord2, aCoord3, aMass);
 		setGravityForces( new ArrayList<Force>() );
 		setStaticForces( new ArrayList<Force>() );
+		setNetForce( new Force(0,0,0) );
 		setVelocity( new Vector3D() );
 		setAcceleration( new Vector3D() );
 		setId( counter++ );
@@ -95,6 +97,20 @@ public class PhysicalObject extends MaterialPoint {
 	 */
 	public void setGravityForces(List<Force> forces) {
 		this.gravityForces = forces;
+	}
+	
+	/**
+	 * @return the netForce
+	 */
+	public Force getNetForce() {
+		return netForce;
+	}
+	
+	/**
+	 * @param force
+	 */
+	private void setNetForce(Force netForce) {
+		this.netForce = netForce;	
 	}
 	
 	/**
@@ -207,5 +223,12 @@ public class PhysicalObject extends MaterialPoint {
 	 */
 	public void setStaticForces(List<Force> staticForces) {
 		this.staticForces = staticForces;
+	}
+
+	/**
+	 * @return
+	 */
+	public PhysicalObjectMockup getMockup() {
+		return new PhysicalObjectMockup( this.getCoordinates(), this.getNetForce().versor().getComponents());
 	}
 }
