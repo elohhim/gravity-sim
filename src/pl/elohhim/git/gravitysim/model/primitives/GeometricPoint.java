@@ -6,22 +6,22 @@ package pl.elohhim.git.gravitysim.model.primitives;
  *
  */
 public class GeometricPoint {
-	
+
 	protected double[] coordinates;
-	
+
 	/**
-	 * 
+	 *
 	 * @param dimensions - quantity of dimensions
 	 */
 	public GeometricPoint( int dimensions ) {
-		setCoordinates(new double[dimensions]);
+		this.setCoordinates(new double[dimensions]);
 	}
-	
+
 	/**
 	 * @return the coordinates
 	 */
 	public double[] getCoordinates() {
-		return coordinates;
+		return this.coordinates;
 	}
 
 	/**
@@ -30,12 +30,12 @@ public class GeometricPoint {
 	public void setCoordinates(double[] coordinates) {
 		this.coordinates = coordinates;
 	}
-	
+
 	public double getCoordinate( int which) {
-		return coordinates[which];
+		return this.coordinates[which];
 	}
-	
+
 	public void setCoordinate( int which, double coordinate) {
-		coordinates[which] = coordinate;
+		this.coordinates[which] = coordinate;
 	}
 }

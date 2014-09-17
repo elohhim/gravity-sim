@@ -33,7 +33,7 @@ public class Force extends Vector3D {
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	/**
 	 * @param name the name to set

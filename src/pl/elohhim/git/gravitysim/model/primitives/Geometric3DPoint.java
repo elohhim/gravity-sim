@@ -16,9 +16,9 @@ public class Geometric3DPoint extends GeometricPoint {
 		super(3);
 		this.coordinates[0] = coord1;
 		this.coordinates[1] = coord2;
-		this.coordinates[2] = coord3;	
+		this.coordinates[2] = coord3;
 	}
-	
+
 
 	/**
 	 * @return the radiusVector

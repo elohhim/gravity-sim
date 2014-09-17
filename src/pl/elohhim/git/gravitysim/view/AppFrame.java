@@ -19,14 +19,14 @@ import pl.elohhim.git.gravitysim.events.ProgramEvent;
 public class AppFrame extends JFrame {
 	private BlockingQueue<ProgramEvent> blockingQueue;
 	private Mockup mockup;
-	
+
 	public AppFrame(BlockingQueue<ProgramEvent> blockingQueue, Mockup mockup) {
 		this.blockingQueue = blockingQueue;
 		this.mockup = mockup;
-		
-		initialize();
+
+		this.initialize();
 	}
-	
+
 	private void initialize()
 	{
 		this.setBounds(100, 100, 400, 400);
@@ -34,7 +34,7 @@ public class AppFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout( new BorderLayout() );
 		this.setVisible( true );
-		
+
 		DrawPanel drawPanel = new DrawPanel( this.mockup );
 		this.add( drawPanel );
 		/*this.addKeyListener( new KeyAdapter() {
@@ -43,13 +43,13 @@ public class AppFrame extends JFrame {
 				blockingQueue.add( new KeyPressedEvent( e.getKeyCode()) );
 			}
 		});*/
-		SimulationPlayer player = new SimulationPlayer( blockingQueue );
-		
+		SimulationPlayer player = new SimulationPlayer( this.blockingQueue );
+
 		this.add( player, BorderLayout.PAGE_END);
 	}
 
 	public Mockup getMockup() {
-		return mockup;
+		return this.mockup;
 	}
 
 	public void setMockup(Mockup mockup) {

@@ -18,44 +18,52 @@ import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 public class PhysicalSystem {
 
 	private List<PhysicalObject> objectList;
-	
+
 	private IGravitation gravitation;
-	
+
 	/**
 	 * default constructor
 	 */
 	public PhysicalSystem() {
-		objectList = new ArrayList<PhysicalObject>();
-		gravitation = new ParticleParticleGravitation();
+		this.objectList = new ArrayList<PhysicalObject>();
+		this.gravitation = new ParticleParticleGravitation();
 	}
-	
+
 	public void populateSystem() {
 		PhysicalObject earth = new PhysicalObject(0,0,0,5.9736e24);
 		earth.setName("Ziemia");
-		objectList.add( earth);
+		this.objectList.add( earth);
 		PhysicalObject moon = new PhysicalObject(384400e3, 0, 0, 7.347673e22);
 		moon.setName("Ksiezyc");
 		moon.setVelocity( new Vector3D(0, 1.022e3, 0));
-		objectList.add( moon);
+		this.objectList.add( moon);
+		/*PhysicalObject smth = new PhysicalObject(-384400e3, 0, 0, 7.347673e22);
+		smth.setName("Smth");
+		smth.setVelocity( new Vector3D(0, -1.022e3, 0));
+		objectList.add( smth );*/
+		for( PhysicalObject element : this.getObjectsList() ) {
+			this.calculateGravityForces();
+			element.initiate();
+		}
 	}
-	
+
 	public void iterateTimeTick( double timeTick) {
-		calculateGravityForces();
-		for( PhysicalObject element : objectList) {
+		this.calculateGravityForces();
+		for( PhysicalObject element : this.objectList) {
 			element.iterateTimeTick(timeTick);
 		}
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void calculateGravityForces() {
 		// cleaning
-		for( PhysicalObject element : objectList) {
+		for( PhysicalObject element : this.objectList) {
 			element.cleanGravityForces();
 		}
-		for( int i = 0; i < objectList.size() - 1; i++ ) {
-			for( int j = i+1; j < objectList.size(); j++) {
-				gravitation.gravitationalInteraction( objectList.get(i), objectList.get(j) );
+		for( int i = 0; i < this.objectList.size() - 1; i++ ) {
+			for( int j = i+1; j < this.objectList.size(); j++) {
+				this.gravitation.gravitationalInteraction( this.objectList.get(i), this.objectList.get(j) );
 				//System.out.println("Added interaction: " + i + "-" + j);
 			}
 		}
@@ -63,7 +71,7 @@ public class PhysicalSystem {
 
 	public ArrayList<String> getNames() {
 		ArrayList<String> names = new ArrayList<String>();
-		for ( PhysicalObject element : objectList) {
+		for ( PhysicalObject element : this.objectList) {
 			names.add(element.getName() );
 		}
 		return names;
@@ -79,5 +87,12 @@ public class PhysicalSystem {
 		}
 		return mockupsList;
 	}
-	
+
+	/**
+	 * @return
+	 */
+	public  List<PhysicalObject> getObjectsList() {
+		return this.objectList;
+	}
+
 }

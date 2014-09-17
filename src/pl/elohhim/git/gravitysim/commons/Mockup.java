@@ -12,14 +12,14 @@ import java.util.List;
 public class Mockup {
 	public List<String> names;
 	public List<PhysicalObjectMockup> objectsMockup;
-	
+
 	public Mockup(List<String> names, List<PhysicalObjectMockup> objectsMockup) {
 		super();
 		this.names = names;
-		this.objectsMockup = objectsMockup; 
+		this.objectsMockup = objectsMockup;
 	}
-	
-	
-	
-	
+
+
+
+
 }

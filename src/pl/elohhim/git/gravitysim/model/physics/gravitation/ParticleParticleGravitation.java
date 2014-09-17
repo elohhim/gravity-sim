@@ -22,22 +22,22 @@ public final class ParticleParticleGravitation implements IGravitation {
 			PhysicalObject object2) {
 		//calculating distance between objects
 		Vector3D distance = Vector3D.subtract(object2.getRadiusVector(), object1.getRadiusVector());
-		
+
 		//calculating gravity force
 		double gravityNumerator = ParticleParticleGravitation.gravitationalConstant * object1.getMass() * object2.getMass();
 		double gravityDenominator = Math.pow( distance.value(), 2.0);
 		double gravityValue = gravityNumerator/gravityDenominator;
-				
+
 		//adding interaction to 1st object
 		String name12 = object1.getName() + "_" + object2.getName();
 		Force interaction12 = new Force( Vector3D.scaleVector( distance.versor(), gravityValue), name12);
-		object1.addForce(interaction12);
-				
+		object1.addGravityForce(interaction12);
+
 		//adding interaction to 2nd object
 		String name21 = object2.getName() + "-" + object1.getName();
 		Force interaction21 = new Force( Vector3D.scaleVector( distance.versor(), -gravityValue), name21);
-		object2.addForce(interaction21);
-		
+		object2.addGravityForce(interaction21);
+
 		return interaction12;
 
 	}

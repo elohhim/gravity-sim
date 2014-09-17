@@ -10,18 +10,18 @@ package pl.elohhim.git.gravitysim.events;
 public class ProgramEvent {
 
 	static private long eventCounter = 0;
-	
+
 	protected long id;
-	
+
 	public ProgramEvent() {
 		this.id = eventCounter++;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	/**

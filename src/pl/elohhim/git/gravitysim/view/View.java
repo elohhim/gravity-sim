@@ -18,12 +18,12 @@ import pl.elohhim.git.gravitysim.events.ViewReadyEvent;
 public class View {
 
 	private final BlockingQueue<ProgramEvent> blockingQueue;
-	
+
 	private AppFrame frame;
-		
+
 	/**
 	 * Creates new View
-	 * 
+	 *
 	 * @param blockingQueue - queue for communication with controller
 	 * @param mockup - lightweight representation of model
 	 */
@@ -32,25 +32,25 @@ public class View {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame = new AppFrame(blockingQueue, mockup);
-				frame.setVisible(true);
+				View.this.frame = new AppFrame(blockingQueue, mockup);
+				View.this.frame.setVisible(true);
 				blockingQueue.add( new ViewReadyEvent() );
 			}
 		});
 	}
-	
+
 	/**
-	 * Refreshing view based on Mockup provided from Model 
-	 * 
+	 * Refreshing view based on Mockup provided from Model
+	 *
 	 * @param mockup - lightweight representation of model
 	 */
 	public void refresh(final Mockup mockup) {
 		try {
-			frame.setMockup(mockup);
+			this.frame.setMockup(mockup);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		frame.repaint();
+		this.frame.repaint();
 	}
 
 }

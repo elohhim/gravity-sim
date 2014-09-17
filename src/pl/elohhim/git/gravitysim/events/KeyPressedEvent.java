@@ -2,7 +2,7 @@ package pl.elohhim.git.gravitysim.events;
 
 public class KeyPressedEvent extends ProgramEvent {
 	private int keyCode;
-	
+
 	public KeyPressedEvent( int keyCode )
 	{
 		super();
@@ -10,12 +10,12 @@ public class KeyPressedEvent extends ProgramEvent {
 	}
 
 	public int getKeyCode() {
-		return keyCode;
+		return this.keyCode;
 	}
 
 	public void setKeyCode(int keyCode) {
 		this.keyCode = keyCode;
 	}
-	
-	
+
+
 }
