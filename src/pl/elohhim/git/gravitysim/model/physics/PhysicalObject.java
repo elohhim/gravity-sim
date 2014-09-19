@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 
 import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
+import pl.elohhim.git.gravitysim.model.physics.kinematics.CurvilinearMotion;
+import pl.elohhim.git.gravitysim.model.physics.kinematics.IMotion;
 import pl.elohhim.git.gravitysim.model.primitives.MaterialPoint;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
@@ -169,7 +171,12 @@ public class PhysicalObject extends MaterialPoint {
 	 * @param timeTick
 	 */
 	public void moveObject( double timeTick ) {
-		this.setRadiusVector( Vector3D.add( this.getRadiusVector(), this.calculateDisplacement( timeTick ) ) );
+		/*
+		System.out.println( "RV: \t" + this.getRadiusVector() );
+		System.out.println( "D: \t" + this.calculateDisplacement( timeTick ) );
+		System.out.println( "SUM: \t" + Vector3D.add( this.getRadiusVector(), this.calculateDisplacement( timeTick ) ) );
+		//*/
+		this.setRadiusVector( Vector3D.add(this.getRadiusVector(), this.calculateDisplacement( timeTick ) ) );
 	}
 
 	/**
@@ -183,6 +190,7 @@ public class PhysicalObject extends MaterialPoint {
 		//accelerated motion
 		Vector3D acceleratedDelta = Vector3D.scaleVector( this.getAcceleration(), Math.pow( timeTick, 2.0 )/2 );
 		return Vector3D.add( uniformDelta, acceleratedDelta );
+		//return uniformDelta;
 
 	}
 	/**

@@ -80,13 +80,13 @@ public class Vector3D {
 	 * @return
 	 */
 	public static Vector3D scalarProduct(Vector3D first, Vector3D second){
-		double result[] = new double[3];
+		Vector3D result = new Vector3D();
 		for( int i = 0; i < 3; i++)
 		{
-			result[i] = first.getComponents()[i] * second.getComponents()[i];
+			result.getComponents()[i] = first.getComponents()[i] * second.getComponents()[i];
 		}
 
-		return new Vector3D( result[0], result[1], result[2]);
+		return result;
 	}
 
 	/**

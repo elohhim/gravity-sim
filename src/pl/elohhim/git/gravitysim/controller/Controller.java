@@ -91,11 +91,13 @@ public class Controller {
 					//System.out.println( "Iteration " + event.getId() );
 					Controller.this.simulation.iterate();
 					Mockup mockup = Controller.this.simulation.getModel().getMockup();
-					if (nIE.getIterationId() % 10 == 0) {
+					if (nIE.getIterationId() % 300 == 0) {
 						Controller.this.blockingQueue.add(new ViewRefreshEvent(mockup));
-						//PhysicalObject element = simulation.getModel().getPhysicalSystem().getObjectsList().get(1);
-						for( PhysicalObject element : simulation.getModel().getPhysicalSystem().getObjectsList() )
-						System.out.print( element );
+						/*
+						PhysicalObject element = simulation.getModel().getPhysicalSystem().getObjectsList().get(1);
+						//for( PhysicalObject element : simulation.getModel().getPhysicalSystem().getObjectsList() )
+							System.out.print( element );
+						//*/
 					}
 					Controller.this.blockingQueue.add(new NextIterationEvent());
 				} else {

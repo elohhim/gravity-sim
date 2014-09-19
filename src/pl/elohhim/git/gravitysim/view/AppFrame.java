@@ -29,7 +29,7 @@ public class AppFrame extends JFrame {
 
 	private void initialize()
 	{
-		this.setBounds(100, 100, 400, 400);
+		this.setBounds(100, 100, 800, 800);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout( new BorderLayout() );

@@ -29,7 +29,7 @@ public class Simulation {
 		this.blockingQueue = blockingQueue;
 		this.model = new Model( blockingQueue );
 		this.state = SimulationState.STOPPED;
-		this.timeTick = 1;
+		this.timeTick = 10;
 	}
 
 	/**

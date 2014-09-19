@@ -37,10 +37,16 @@ public class PhysicalSystem {
 		moon.setName("Ksiezyc");
 		moon.setVelocity( new Vector3D(0, 1.022e3, 0));
 		this.objectList.add( moon);
-		/*PhysicalObject smth = new PhysicalObject(-384400e3, 0, 0, 7.347673e22);
+		PhysicalObject smth = new PhysicalObject(-684400e3, 0, 0, 7.347673e23);
 		smth.setName("Smth");
-		smth.setVelocity( new Vector3D(0, -1.022e3, 0));
-		objectList.add( smth );*/
+		smth.setVelocity( new Vector3D(0, +0.522e3, 0));
+		objectList.add( smth );
+		PhysicalObject smth2 = new PhysicalObject(0, -484400e3, 0, 7.347673e22);
+		smth2.setVelocity( new Vector3D(+0.522e3, +0.522e3, 0));
+		objectList.add( smth2 );
+		PhysicalObject smth3 = new PhysicalObject(0, +84400e3, 0, 7.347673e22);
+		smth3.setVelocity( new Vector3D(-1.522e3, -0.822e3, 0));
+		objectList.add( smth3 );
 		for( PhysicalObject element : this.getObjectsList() ) {
 			this.calculateGravityForces();
 			element.initiate();
@@ -64,7 +70,6 @@ public class PhysicalSystem {
 		for( int i = 0; i < this.objectList.size() - 1; i++ ) {
 			for( int j = i+1; j < this.objectList.size(); j++) {
 				this.gravitation.gravitationalInteraction( this.objectList.get(i), this.objectList.get(j) );
-				//System.out.println("Added interaction: " + i + "-" + j);
 			}
 		}
 	}

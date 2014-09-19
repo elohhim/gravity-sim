@@ -18,9 +18,11 @@ import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 @SuppressWarnings("serial")
 public class DrawPanel extends JPanel {
 	private Mockup mockup;
+	private double scaleFactor;
 
 	public DrawPanel( Mockup mockup) {
 		this.mockup = mockup;
+		this.scaleFactor = 0;
 		this.setVisible( true );
 	}
 
@@ -37,33 +39,40 @@ public class DrawPanel extends JPanel {
 		this.mockup = ( (AppFrame)parent ).getMockup();
 
 		//drawing
-		double scaleFactor = this.calculateScaleFactor( this.mockup );
-
-		this.drawPhysicalObjects( g2d, scaleFactor);
+		if( scaleFactor == 0 ) 
+			this.scaleFactor = calculateScaleFactor( this.mockup );
+		this.drawPhysicalObjects( g2d );
 	}
-	private void drawPhysicalObjects(Graphics2D g2d, double scaleFactor) {
+	
+	private void drawPhysicalObjects(Graphics2D g2d ) {
 		Ellipse2D e;
 		Line2D l;
 		double X;
 		double Y;
+		double dotSize = 4;
+		
 		for( PhysicalObjectMockup element : this.mockup.objectsMockup) {
-			X = element.coordinates[0]*scaleFactor+this.getWidth()/2;
-			Y = element.coordinates[1]*scaleFactor+this.getHeight()/2;
+			X = element.coordinates[0]*this.scaleFactor+this.getWidth()/2;
+			Y = element.coordinates[1]*this.scaleFactor+this.getHeight()/2;
 
-			e = new Ellipse2D.Double( X-5,Y-5,10,10);
+			e = new Ellipse2D.Double( X-dotSize/2,Y-dotSize/2,dotSize,dotSize);
 			g2d.setColor( Color.RED );
 			g2d.fill(e);
 			g2d.setColor( Color.BLACK );
 			g2d.draw(e);
 
+			/*
 			//Force
 			l = new Line2D.Double(X, Y, X+element.netForceVersor[0]*20, Y+element.netForceVersor[1]*20);
 			g2d.setColor( Color.GREEN );
 			g2d.draw(l);
+			//*/
+			
 			//Velocity
 			l = new Line2D.Double( X, Y, X + element.velocityVersor[0]*10, Y + element.velocityVersor[1]*10);
 			g2d.setColor( Color.BLUE );
 			g2d.draw(l);
+			//*/
 			//Acceleration
 			l = new Line2D.Double( X, Y, X + element.accelerationVersor[0]*10, Y + element.accelerationVersor[1]*10);
 			g2d.setColor( Color.ORANGE);
