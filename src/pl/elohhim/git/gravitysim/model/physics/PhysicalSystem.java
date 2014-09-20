@@ -30,23 +30,17 @@ public class PhysicalSystem {
 	}
 
 	public void populateSystem() {
-		PhysicalObject earth = new PhysicalObject(0,0,0,5.9736e24);
+		PhysicalObject sun = new PhysicalObject(0,0,0,1.98855e30);
+		sun.setName("S³oñce");
+		this.objectList.add( sun );
+		PhysicalObject earth = new PhysicalObject(149600e6,0,0,5.9736e24);
 		earth.setName("Ziemia");
+		earth.setVelocity( new Vector3D(0, 29.783e3, 0) );
 		this.objectList.add( earth);
-		PhysicalObject moon = new PhysicalObject(384400e3, 0, 0, 7.347673e22);
+		PhysicalObject moon = new PhysicalObject( 149600e6 ,384400e3, 0, 7.347673e22);
 		moon.setName("Ksiezyc");
-		moon.setVelocity( new Vector3D(0, 1.022e3, 0));
+		moon.setVelocity( new Vector3D(1.022e3, 29.783e3, 0));
 		this.objectList.add( moon);
-		PhysicalObject smth = new PhysicalObject(-684400e3, 0, 0, 7.347673e23);
-		smth.setName("Smth");
-		smth.setVelocity( new Vector3D(0, +0.522e3, 0));
-		objectList.add( smth );
-		PhysicalObject smth2 = new PhysicalObject(0, -484400e3, 0, 7.347673e22);
-		smth2.setVelocity( new Vector3D(+0.522e3, +0.522e3, 0));
-		objectList.add( smth2 );
-		PhysicalObject smth3 = new PhysicalObject(0, +84400e3, 0, 7.347673e22);
-		smth3.setVelocity( new Vector3D(-1.522e3, -0.822e3, 0));
-		objectList.add( smth3 );
 		for( PhysicalObject element : this.getObjectsList() ) {
 			this.calculateGravityForces();
 			element.initiate();
