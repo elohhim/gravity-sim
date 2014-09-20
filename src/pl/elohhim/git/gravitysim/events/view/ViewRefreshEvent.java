@@ -1,6 +1,7 @@
-package pl.elohhim.git.gravitysim.events;
+package pl.elohhim.git.gravitysim.events.view;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
+import pl.elohhim.git.gravitysim.events.ProgramEvent;
 
 public class ViewRefreshEvent extends ProgramEvent {
 

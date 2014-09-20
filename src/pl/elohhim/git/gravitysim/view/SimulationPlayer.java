@@ -24,6 +24,7 @@ import pl.elohhim.git.gravitysim.events.simulation.StopSimulationEvent;
 @SuppressWarnings("serial")
 public class SimulationPlayer extends JToolBar {
 
+	@SuppressWarnings("unused")
 	private BlockingQueue<ProgramEvent> blockingQueue;
 
 	public SimulationPlayer( final BlockingQueue<ProgramEvent> blockingQueue ) {

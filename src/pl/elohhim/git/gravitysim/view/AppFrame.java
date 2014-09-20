@@ -19,23 +19,23 @@ import pl.elohhim.git.gravitysim.events.ProgramEvent;
 public class AppFrame extends JFrame {
 	private BlockingQueue<ProgramEvent> blockingQueue;
 	private Mockup mockup;
+	private DrawPanel drawPanel;
 
 	public AppFrame(BlockingQueue<ProgramEvent> blockingQueue, Mockup mockup) {
 		this.blockingQueue = blockingQueue;
 		this.mockup = mockup;
-
 		this.initialize();
 	}
 
 	private void initialize()
 	{
-		this.setBounds(100, 100, 800, 800);
-
+		this.setBounds(100, 100, 800, 600);
+		//this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout( new BorderLayout() );
 		this.setVisible( true );
 
-		DrawPanel drawPanel = new DrawPanel( this.mockup );
+		this.drawPanel = new DrawPanel( this.mockup, blockingQueue );
 		this.add( drawPanel );
 		/*this.addKeyListener( new KeyAdapter() {
 			@Override
@@ -43,9 +43,13 @@ public class AppFrame extends JFrame {
 				blockingQueue.add( new KeyPressedEvent( e.getKeyCode()) );
 			}
 		});*/
+		
 		SimulationPlayer player = new SimulationPlayer( this.blockingQueue );
-
 		this.add( player, BorderLayout.PAGE_END);
+		
+		ScaleToolbar scalePlayer = new ScaleToolbar( this.blockingQueue );
+		this.add( scalePlayer, BorderLayout.EAST );
+		
 	}
 
 	public Mockup getMockup() {
@@ -56,5 +60,7 @@ public class AppFrame extends JFrame {
 		this.mockup = mockup;
 	}
 
-
+	public void rescaleDrawPanel( double scaleExponent ) {
+			this.drawPanel.rescale( scaleExponent );	
+	}
 }

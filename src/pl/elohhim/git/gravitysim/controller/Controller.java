@@ -12,13 +12,13 @@ import pl.elohhim.git.gravitysim.controller.simulation.Simulation;
 import pl.elohhim.git.gravitysim.controller.simulation.SimulationState;
 import pl.elohhim.git.gravitysim.events.NextIterationEvent;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
-import pl.elohhim.git.gravitysim.events.ViewReadyEvent;
-import pl.elohhim.git.gravitysim.events.ViewRefreshEvent;
 import pl.elohhim.git.gravitysim.events.simulation.PauseSimulationEvent;
 import pl.elohhim.git.gravitysim.events.simulation.ResumeSimulationEvent;
 import pl.elohhim.git.gravitysim.events.simulation.StartSimulationEvent;
 import pl.elohhim.git.gravitysim.events.simulation.StopSimulationEvent;
-import pl.elohhim.git.gravitysim.model.physics.PhysicalObject;
+import pl.elohhim.git.gravitysim.events.view.ViewReadyEvent;
+import pl.elohhim.git.gravitysim.events.view.ViewRefreshEvent;
+import pl.elohhim.git.gravitysim.events.view.ViewRescaleEvent;
 import pl.elohhim.git.gravitysim.view.View;
 
 /**
@@ -123,11 +123,23 @@ public class Controller {
 				ViewReadyEvent vRE = ( ViewReadyEvent ) event;
 			}
 		});
+		
+		this.eventActionMap.put( ViewRescaleEvent.class, new ProgramAction() {
+
+			@Override
+			public void go( ProgramEvent event ) {
+				// TODO Auto-generated method stub
+				ViewRescaleEvent vRE = ( ViewRescaleEvent ) event;
+				view.rescaleDrawPanel( vRE.scaleExponent );
+				view.refresh(Controller.this.simulation.getModel().getMockup());
+			}
+		});
 
 		this.eventActionMap.put( StartSimulationEvent.class, new ProgramAction()
 		{
 			@Override
 			public void go( ProgramEvent event ) {
+				@SuppressWarnings("unused")
 				StartSimulationEvent sSE = ( StartSimulationEvent) event;
 
 				Controller.this.simulation.setState( SimulationState.RUNNING );
@@ -139,6 +151,7 @@ public class Controller {
 
 			@Override
 			public void go( ProgramEvent event) {
+				@SuppressWarnings("unused")
 				PauseSimulationEvent pSE = ( PauseSimulationEvent ) event;
 				Controller.this.simulation.setState( SimulationState.PAUSED );
 			}
@@ -148,6 +161,7 @@ public class Controller {
 
 			@Override
 			public void go( ProgramEvent event) {
+				@SuppressWarnings("unused")
 				ResumeSimulationEvent rSE = ( ResumeSimulationEvent ) event;
 
 				Controller.this.simulation.setState( SimulationState.RUNNING );
@@ -159,6 +173,7 @@ public class Controller {
 
 			@Override
 			public void go( ProgramEvent event) {
+				@SuppressWarnings("unused")
 				StopSimulationEvent sSE = ( StopSimulationEvent ) event;
 
 				Controller.this.simulation.setState( SimulationState.STOPPED );

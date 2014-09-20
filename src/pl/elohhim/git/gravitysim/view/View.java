@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 import pl.elohhim.git.gravitysim.commons.Mockup;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
-import pl.elohhim.git.gravitysim.events.ViewReadyEvent;
+import pl.elohhim.git.gravitysim.events.view.ViewReadyEvent;
 
 /**
  * @author elohhim
@@ -51,6 +51,10 @@ public class View {
 			e.printStackTrace();
 		}
 		this.frame.repaint();
+	}
+
+	public void rescaleDrawPanel( double scaleExponent ) {
+		this.frame.rescaleDrawPanel( scaleExponent );
 	}
 
 }
