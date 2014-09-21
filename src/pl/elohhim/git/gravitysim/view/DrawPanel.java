@@ -16,6 +16,8 @@ import javax.swing.SwingUtilities;
 import pl.elohhim.git.gravitysim.commons.Mockup;
 import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 import pl.elohhim.git.gravitysim.events.ProgramEvent;
+import pl.elohhim.git.gravitysim.model.physics.spaceObjects.Planet;
+import pl.elohhim.git.gravitysim.model.physics.spaceObjects.Star;
 
 
 @SuppressWarnings("serial")
@@ -78,9 +80,18 @@ public class DrawPanel extends JPanel {
 			X = element.coordinates[0]*this.scaleFactor+this.coordinateSystemZero.x;
 			Y = element.coordinates[1]*this.scaleFactor+this.coordinateSystemZero.y;
 
+			if( element.type == Star.class ) {
+				dotSize = 16;
+				g2d.setColor( Color.ORANGE );
+			} else if( element.type == Planet.class) {
+				dotSize = 4;
+				g2d.setColor( Color.RED );
+			} else {
+				dotSize = 1;
+				g2d.setColor( Color.BLACK );
+			};
 			e = new Ellipse2D.Double( X-dotSize/2,Y-dotSize/2,dotSize,dotSize);
-			g2d.setColor( Color.RED );
-			//g2d.fill(e);
+			g2d.fill(e);
 			g2d.setColor( Color.BLACK );
 			g2d.draw(e);
 

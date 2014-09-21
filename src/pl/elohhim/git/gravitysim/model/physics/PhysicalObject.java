@@ -42,7 +42,7 @@ public class PhysicalObject extends MaterialPoint {
 	 * @param aMass
 	 */
 	public PhysicalObject(double aCoord1, double aCoord2, double aCoord3,
-			double aMass) {
+			double aMass, String name) {
 		super(aCoord1, aCoord2, aCoord3, aMass);
 		this.setGravityForces( new ArrayList<Force>() );
 		this.setStaticForces( new ArrayList<Force>() );
@@ -50,7 +50,7 @@ public class PhysicalObject extends MaterialPoint {
 		this.setVelocity( new Vector3D() );
 		this.setAcceleration( new Vector3D() );
 		this.setId( counter++ );
-		this.setName( "obiekt_" + this.id );
+		this.setName( name );
 	}
 
 	/**
@@ -248,7 +248,8 @@ public class PhysicalObject extends MaterialPoint {
 				this.getCoordinates(),
 				this.getNetForce().versor().getComponents(),
 				this.getVelocity().versor().getComponents(),
-				this.getAcceleration().versor().getComponents());
+				this.getAcceleration().versor().getComponents(),
+				this.getClass() );
 	}
 
 	/**

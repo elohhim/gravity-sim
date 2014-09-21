@@ -9,6 +9,9 @@ import java.util.List;
 import pl.elohhim.git.gravitysim.commons.PhysicalObjectMockup;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.IGravitation;
 import pl.elohhim.git.gravitysim.model.physics.gravitation.ParticleParticleGravitation;
+import pl.elohhim.git.gravitysim.model.physics.spaceObjects.Planet;
+import pl.elohhim.git.gravitysim.model.physics.spaceObjects.Satelite;
+import pl.elohhim.git.gravitysim.model.physics.spaceObjects.Star;
 import pl.elohhim.git.gravitysim.model.primitives.Vector3D;
 
 /**
@@ -30,14 +33,13 @@ public class PhysicalSystem {
 	}
 
 	public void populateSystem() {
-		PhysicalObject sun = new PhysicalObject(0,0,0,1.98855e30);
-		sun.setName("S³oñce");
+		Star sun = new Star(0,0,0,1.98855e30, "Sun");
 		this.objectList.add( sun );
-		PhysicalObject earth = new PhysicalObject(149600e6,0,0,5.9736e24);
+		Planet earth = new Planet(149600e6,0,0,5.9736e24, "Earth");
 		earth.setName("Ziemia");
 		earth.setVelocity( new Vector3D(0, 29.783e3, 0) );
 		this.objectList.add( earth);
-		PhysicalObject moon = new PhysicalObject( 149600e6 ,384400e3, 0, 7.347673e22);
+		Satelite moon = new Satelite( 149600e6 ,384400e3, 0, 7.347673e22, "Moon");
 		moon.setName("Ksiezyc");
 		moon.setVelocity( new Vector3D(1.022e3, 29.783e3, 0));
 		this.objectList.add( moon);
