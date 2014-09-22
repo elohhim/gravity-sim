@@ -1,5 +1,6 @@
 package pl.elohhim.git.gravitysim.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
@@ -35,10 +36,21 @@ public class DrawPanel extends JPanel {
 		this.baseScaleFactor = 0;
 		this.scaleFactor = 0;
 		this.coordinateSystemZero = new Point(0,0);
-		this.setVisible( true );
+		
+		initialize();
+		
+	}
+
+	/**
+	 * adding all necessary elements to DrawPanel
+	 */
+	private void initialize()
+	{
 		DrawPanelMouseListener mouseListener = new DrawPanelMouseListener();
 		this.addMouseListener( mouseListener );
 		this.addMouseMotionListener( mouseListener );
+		
+		this.setVisible( true );
 	}
 
 	public Point getCoordinateSystemZero() {

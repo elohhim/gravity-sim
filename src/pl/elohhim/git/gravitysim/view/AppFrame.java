@@ -44,12 +44,11 @@ public class AppFrame extends JFrame {
 			}
 		});*/
 		
-		SimulationPlayer player = new SimulationPlayer( this.blockingQueue );
-		this.add( player, BorderLayout.PAGE_END);
-		
 		ScaleToolbar scalePlayer = new ScaleToolbar( this.blockingQueue );
 		this.add( scalePlayer, BorderLayout.EAST );
 		
+		SimulationPlayer player = new SimulationPlayer( this.blockingQueue );
+		this.add( player, BorderLayout.PAGE_END);
 	}
 
 	public Mockup getMockup() {
